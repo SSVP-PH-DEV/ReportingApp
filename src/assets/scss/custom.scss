@@ -1,0 +1,509 @@
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+
+// Custom color variables
+$primary: #1a56db;
+$secondary: #4b5563;
+$success: #00A67E;
+$info: #3b82f6;
+$warning: #f59e0b;
+$danger: #ee4444;
+$light: #f9fafb;
+$dark: #111827;
+
+// Custom spacing variables
+$spacer: 1rem;
+$spacers: (
+  0: 0,
+  1: $spacer * 0.25,
+  2: $spacer * 0.5,
+  3: $spacer,
+  4: $spacer * 1.5,
+  5: $spacer * 3,
+  6: $spacer * 4,
+  7: $spacer * 5,
+  8: $spacer * 6
+);
+
+// Custom border variables
+$border-radius: 0.375rem;
+$border-radius-sm: 0.25rem;
+$border-radius-lg: 0.5rem;
+$border-radius-xl: 0.75rem;
+$border-radius-2xl: 1rem;
+$border-radius-pill: 50rem;
+
+// Font variables
+$font-family-sans-serif: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+$font-size-base: 0.95rem;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+$headings-font-weight: $font-weight-semibold;
+
+// Custom theme colors
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "success": $success,
+  "info": $info,
+  "warning": $warning,
+  "danger": $danger,
+  "light": $light,
+  "dark": $dark
+);
+
+// Import Bootstrap
+@import "bootstrap/scss/bootstrap";
+
+// Custom styles
+body {
+  min-height: 100vh;
+  font-family: $font-family-sans-serif;
+  font-size: $font-size-base;
+  background-color: #f5f7fb;
+  color: $secondary;
+}
+
+.app-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+// Sidebar Styles
+.sidebar {
+  width: 260px;
+  background-color: $white;
+  border-right: 1px solid rgba(0, 0, 0, 0.05);
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1030;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 1px 15px rgba(0, 0, 0, 0.04), 0 1px 6px rgba(0, 0, 0, 0.04);
+  
+  &.collapsed {
+    width: 70px;
+    
+    .sidebar-header {
+      h3 {
+        display: none;
+      }
+    }
+    
+    .nav-link {
+      span, .dropdown-toggle::after {
+        display: none;
+      }
+      
+      i, svg {
+        margin-right: 0;
+      }
+    }
+    
+    .dropdown-menu {
+      display: none !important;
+    }
+  }
+}
+
+.sidebar-header {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.25rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  
+  h3 {
+    font-size: 1.25rem;
+    font-weight: $font-weight-semibold;
+    color: $primary;
+    margin: 0;
+  }
+  
+  .btn-toggle {
+    background: none;
+    border: none;
+    color: $secondary;
+    cursor: pointer;
+    padding: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    &:hover {
+      color: $primary;
+    }
+  }
+}
+
+.sidebar-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem 0;
+}
+
+.nav-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-item {
+  margin-bottom: 0.25rem;
+  
+  &.dropdown {
+    .dropdown-menu {
+      background: transparent;
+      border: none;
+      margin: 0;
+      padding: 0 0 0 2.5rem;
+      position: static !important;
+      transform: none !important;
+      display: none;
+      
+      &.show {
+        display: block;
+      }
+      
+      .dropdown-item {
+        color: $secondary;
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+        
+        &:hover, &:focus {
+          color: $primary;
+          background-color: transparent;
+        }
+      }
+    }
+  }
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  color: $secondary;
+  padding: 0.75rem 1.25rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  
+  i, svg {
+    font-size: 1.25rem;
+    margin-right: 0.75rem;
+    width: 20px;
+    text-align: center;
+  }
+  
+  span {
+    flex: 1;
+  }
+  
+  &:hover, &:focus, &.active {
+    color: $primary;
+    background-color: rgba($primary, 0.06);
+  }
+  
+  &.dropdown-toggle {
+    svg:last-child {
+      margin-left: 0.5rem;
+      margin-right: 0;
+      width: 16px;
+    }
+  }
+}
+
+// Main Content Styles
+.main-content {
+  flex: 1;
+  margin-left: 260px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  
+  &.expanded {
+    margin-left: 70px;
+  }
+}
+
+.main-header {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  background-color: $white;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: $primary;
+  color: $white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: $font-weight-medium;
+  font-size: 0.875rem;
+}
+
+.content-wrapper {
+  flex: 1;
+  padding: 1.5rem;
+  background-color: #f5f7fb;
+}
+
+.main-footer {
+  padding: 1rem 1.5rem;
+  background-color: $white;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  font-size: 0.875rem;
+  color: $secondary;
+}
+
+// Card Styles
+.card {
+  border: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  
+  &:hover {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08), 0 3px 6px rgba(0, 0, 0, 0.12);
+  }
+  
+  .card-header {
+    background-color: transparent;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 1rem 1.25rem;
+    font-weight: $font-weight-semibold;
+  }
+  
+  .card-body {
+    padding: 1.25rem;
+  }
+}
+
+// Dashboard Stats Card
+.stat-card {
+  background-color: $white;
+  border-radius: $border-radius;
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  
+  .stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: $border-radius;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    
+    i, svg {
+      font-size: 1.5rem;
+      color: $white;
+    }
+    
+    &.bg-primary-light {
+      background-color: rgba($primary, 0.1);
+      
+      i, svg {
+        color: $primary;
+      }
+    }
+    
+    &.bg-success-light {
+      background-color: rgba($success, 0.1);
+      
+      i, svg {
+        color: $success;
+      }
+    }
+    
+    &.bg-warning-light {
+      background-color: rgba($warning, 0.1);
+      
+      i, svg {
+        color: $warning;
+      }
+    }
+    
+    &.bg-danger-light {
+      background-color: rgba($danger, 0.1);
+      
+      i, svg {
+        color: $danger;
+      }
+    }
+  }
+  
+  .stat-content {
+    flex: 1;
+    
+    .stat-title {
+      color: $secondary;
+      font-size: 0.85rem;
+      margin-bottom: 0.25rem;
+    }
+    
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: $font-weight-bold;
+      color: $dark;
+      margin-bottom: 0;
+    }
+    
+    .stat-change {
+      font-size: 0.8rem;
+      font-weight: $font-weight-medium;
+      
+      &.positive {
+        color: $success;
+      }
+      
+      &.negative {
+        color: $danger;
+      }
+    }
+  }
+}
+
+// Table Styles
+.table {
+  --bs-table-hover-bg: rgba(0, 0, 0, 0.02);
+  
+  thead th {
+    background-color: rgba(0, 0, 0, 0.02);
+    font-weight: $font-weight-semibold;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.025em;
+    color: $secondary;
+    border-bottom-width: 1px;
+  }
+  
+  tbody td {
+    vertical-align: middle;
+  }
+}
+
+// Form Styles
+.form-label {
+  font-weight: $font-weight-medium;
+  margin-bottom: 0.5rem;
+}
+
+.form-control, .form-select {
+  border-color: rgba(0, 0, 0, 0.1);
+  
+  &:focus {
+    box-shadow: 0 0 0 0.25rem rgba($primary, 0.15);
+  }
+}
+
+// Button Styles
+.btn {
+  font-weight: $font-weight-medium;
+  
+  &.btn-primary {
+    background-color: $primary;
+    border-color: $primary;
+    
+    &:hover, &:focus {
+      background-color: darken($primary, 5%);
+      border-color: darken($primary, 5%);
+    }
+  }
+  
+  &.btn-icon {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+// Charts
+.chart-container {
+  position: relative;
+  height: 300px;
+}
+
+// Responsive Adjustments
+@media (max-width: 991.98px) {
+  .sidebar {
+    transform: translateX(-100%);
+    
+    &.collapsed {
+      transform: translateX(0);
+    }
+  }
+  
+  .main-content {
+    margin-left: 0;
+    
+    &.expanded {
+      margin-left: 70px;
+    }
+  }
+}
+
+// Animation transitions
+.dropdown-menu {
+  transition: all 0.3s ease;
+}
+
+.stat-card, .card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+// Login page styles
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f5f7fb;
+  
+  .login-card {
+    width: 100%;
+    max-width: 400px;
+    padding: 2rem;
+    border-radius: $border-radius-lg;
+    background-color: $white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+    
+    .app-logo {
+      text-align: center;
+      margin-bottom: 2rem;
+      
+      h2 {
+        font-weight: $font-weight-bold;
+        color: $primary;
+      }
+    }
+    
+    .form-title {
+      font-weight: $font-weight-bold;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+  }
+}
